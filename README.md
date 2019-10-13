@@ -1,37 +1,23 @@
-## Welcome to GitHub Pages
 
-You can use the [editor on GitHub](https://github.com/gubkin-utility/cinderella/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+## CINDERELLA | Micro text editor
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+Небольшой редактор текстовых файлов *.txt. 
+Может редактировать только один файл или 1000 файлов сразу.
 
-### Markdown
+**На текущих момент добавлены модули для редактирования:**
+1. перемешивание строк текста
+2. сортировка текста по длинне
+3. удалить пустые строки
+4. удалить строки текста по длинне
+5. удаленить пустоты в начале строки
+​
+![CINDERELLA](https://github.com/gubkin-utility/cinderella/blob/master/pic_example.png?raw=true "CINDERELLA")
+​
+**Установка:
+**
+> git clone https://www.github.com/gubkin-utility/cinderella
+> pip3 install PyQt5
+> cd cinderella
+python3 start.py
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/gubkin-utility/cinderella/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
