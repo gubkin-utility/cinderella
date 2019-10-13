@@ -16,8 +16,11 @@
 **Установка:
 **
 > git clone https://www.github.com/gubkin-utility/cinderella
+
 > pip3 install PyQt5
+
 > cd cinderella
-python3 start.py
+
+> python3 start.py
 
 
