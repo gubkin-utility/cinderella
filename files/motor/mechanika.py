@@ -16,6 +16,8 @@ from files.motor.testeditor import TestEditor
 from files.text_editors.techfunction import info_size_file
 
 class Mechanika(QtCore.QThread):
+    #ДЛЯ ОСТАНОВКИ ПЕРИФЕРИЙНЫХ МОДУЛЕЙ
+    stop_now = True
     value_statusbar = QtCore.pyqtSignal(int)
     mysignal = QtCore.pyqtSignal()
     def __init__(self,parent=None):
@@ -95,8 +97,11 @@ class Mechanika(QtCore.QThread):
                 orig_file = text_file.copy()
                 #МАНИПУЛЯЦИИ С ФАЙЛОМ
                 for f in self.allfuncs:
-                    text_file = f(text_file)
-                    
+                    #ФУНКЦИИ КОТОРЫЕНЕ НУЖНО ОБРАБАТЫВАТЬ
+                    if f.__name__ == 'split_files_edit':
+                        None
+                    else:
+                        text_file = f(text_file)                    
                 #ОРИГИНАЛ ФАЙЛ
                 self.mytestmodule.add_text_edit_file(orig_file,'orig')
                 #РЕДАКТ ФАЙЛ
@@ -132,11 +137,19 @@ class Mechanika(QtCore.QThread):
                 text_file = self.opentofilelist(i)
                 #МАНИПУЛЯЦИИ С ФАЙЛОМ
                 for f in self.allfuncs:
-                    text_file = f(text_file)
+                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА
+                    if f.__name__ == 'split_files_edit':
+                        text_file = f(text_file,i)
+                        #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НЕ НАДО
+                        dont_save = True
+                    else:
+                        text_file = f(text_file)
+                        #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НАДО
+                        dont_save = False
                 
-                
-                #СОХРАНЯЕМ ФАЙЛ LIST
-                self.savetofilelist(i,text_file)
+                if dont_save == False:
+                    #СОХРАНЯЕМ ФАЙЛ LIST
+                    self.savetofilelist(i,text_file)
                 self.log.append(i + ' - <b style="color:green;">[Ok]</b>')
             except UnicodeDecodeError:
                 self.log.append(i + ' - <b style="color:red;">[file not utf 8 encoded][Error]</b>')

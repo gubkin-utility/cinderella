@@ -193,6 +193,8 @@ class Body(QtWidgets.QWidget):
         
         #КНОПКА СТАРТ
         def on_start():
+            #ДЛЯ СТАРТА ПЕРИФЕРИЙНЫХ МОДУЛЕЙ
+            Mechanika.stop_now = True
             #ЕСЛИ ФАЙЛОВ В ПАПКЕ НЕТ
             if lcd_search_files.value() == 0:
                 not_files()
@@ -230,6 +232,8 @@ class Body(QtWidgets.QWidget):
         #КНОПКА СТОП
         def on_stop():
             self.mythread.running = False
+            #ДЛЯ ОСТАНОВКИ ПЕРИФЕРИЙНЫХ МОДУЛЕЙ
+            Mechanika.stop_now = False
             gorizont_box_1.replaceWidget(button_stop,button_start)
             clickable_elm()
             

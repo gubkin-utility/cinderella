@@ -66,7 +66,7 @@ class About(QtWidgets.QWidget):
                 button_ok.setStyleSheet('background-color: green;')
                 
             except:
-                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButtons = QtWidgets.QMessageBox.Ok)
+                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
             
             
         
@@ -117,7 +117,7 @@ class About(QtWidgets.QWidget):
                 button_ok2.setStyleSheet('background-color: green;')
                 
             except:
-                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButtons = QtWidgets.QMessageBox.Ok)
+                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
             
                   
         
@@ -152,7 +152,7 @@ class About(QtWidgets.QWidget):
         self.akkardion.addItem(change_music,'Sound Setting')        
         
         #ПОЖЕРТВОВАНИЕ
-        spasibo_text = '<p>BTC: 7887898</p>'
+        spasibo_text = '<p></p>'
         spacibo = QtWidgets.QTextEdit(spasibo_text)
         spacibo.setFont(QtGui.QFont("Cousine"))
         spacibo.setReadOnly(True)

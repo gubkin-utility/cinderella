@@ -69,6 +69,18 @@ def left_strip_str_edit(list):
     from files.text_editors.left_strip_str.editor import editor
     return editor(list)
 #======================================================== 
+#разбить файл(ы) по количеству строк
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def split_files_view():
+    from files.text_editors.split_files.view import View
+    View()
+
+#САМ РЕДАКТОР
+def split_files_edit(list,i):
+    from files.text_editors.split_files.editor import editor
+    editor(list,i)
+#========================================================
 
 
 #1.ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
@@ -79,7 +91,8 @@ all_editors = {
     'сортировать строки по длинне':[sort_len_view,sort_len_edit,True,],
     'перемешать строки текста':[random_lines_view,random_lines_edit,False,],
     'удалить строки текста по длинне':[delete_str_len_view,delete_str_len_edit,True,],
-    'удаленить пустоты в начале строки':[left_strip_str_view,left_strip_str_edit,True,],
+    'удалить пустоты в начале строки':[split_files_view,left_strip_str_edit,True,],
+    'разбить файл(ы) по количеству строк':[split_files_view,split_files_edit,True,],
     
     }
 

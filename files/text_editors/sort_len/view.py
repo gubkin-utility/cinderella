@@ -93,7 +93,7 @@ class View(QtWidgets.QWidget):
         #ЕСЛИ НЕ СУЩЕСТВУЕТ
         else:
             self.rbutton_up.setChecked(True)
-            QtWidgets.QMessageBox.critical(self,'Файл настроек не найден или поврежден','Внимание файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButtons = QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.critical(self,'Файл настроек не найден или поврежден','Внимание файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
             
         #СОХРАНЯЕМ НАСТРОЙКИ
         def button_save_options():
@@ -105,7 +105,7 @@ class View(QtWidgets.QWidget):
                 save_options(all_file_options)
                 self.button_ok.setStyleSheet('background-color: green;')
             except:
-                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButtons = QtWidgets.QMessageBox.Ok)
+                QtWidgets.QMessageBox.critical(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
 
         
         self.button_ok.clicked.connect(button_save_options)

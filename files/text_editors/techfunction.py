@@ -21,7 +21,11 @@ title_project = 'Cinderella'
 icon_project = os.path.join('.','files','pic','icon.png')
 
 
-
+#СОХРАНЕНИЕ В ФАЙЛ LIST
+def savetofilelist(file,text):
+    with open(file,'w', encoding='utf-8') as f:
+        f.writelines(text)
+        
 
 #КОДИРОВКА ФАЙЛА
 def detect_encode(file):
