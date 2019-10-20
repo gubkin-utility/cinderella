@@ -20,10 +20,10 @@ def editor(list1):
     main_options = upload_options()['delete_str_len']
     list1 = [i.rstrip() for i in list1]
     if main_options[0] == '>':
-        result = filter(lambda x: not len(x) > main_options[1], list1)
+        result = filter(lambda x: not len(x) > main_options[1] - 1, list1)
     elif main_options[0] == '=':
-        result = filter(lambda x: len(x) == main_options[1], list1)
+        result = filter(lambda x: len(x) != main_options[1] - 1, list1)
     else:
-        result = filter(lambda x: not len(x) < main_options[1], list1)
+        result = filter(lambda x: not len(x) < main_options[1] - 1, list1)
     return list([i + '\n' for i in result])
         

@@ -77,7 +77,7 @@ class View(QtWidgets.QWidget):
         self.rbutton_max = QtWidgets.QRadioButton('>')
         self.rbutton_max.setToolTip('удалить все строки длиннее "N" символов')
         self.rbutton_ravno = QtWidgets.QRadioButton('=')
-        self.rbutton_ravno.setToolTip('удалить все строки, кроме строк у которых длинна равна "N" символов')
+        self.rbutton_ravno.setToolTip('удалить все строки равные "N" символов')
         self.rbutton_min = QtWidgets.QRadioButton('<')
         self.rbutton_min.setToolTip('удалить все строки менее "N" символов')
         

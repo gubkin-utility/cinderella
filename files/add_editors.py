@@ -81,6 +81,54 @@ def split_files_edit(list,i):
     from files.text_editors.split_files.editor import editor
     editor(list,i)
 #========================================================
+#удаленить пустоты в конце строки
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def right_strip_str_view():
+    from files.text_editors.right_strip_str.view import View
+    View()
+
+#САМ РЕДАКТОР
+def right_strip_str_edit(list):
+    from files.text_editors.right_strip_str.editor import editor
+    return editor(list)
+#========================================================
+#преобразовать строки текста - в верхний регистр
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def str_to_uppercase_view():
+    from files.text_editors.str_to_uppercase.view import View
+    View()
+
+#САМ РЕДАКТОР
+def str_to_uppercase_edit(list):
+    from files.text_editors.str_to_uppercase.editor import editor
+    return editor(list)
+#========================================================
+#преобразовать строки текста - в нижний регистр
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def str_to_lowercase_view():
+    from files.text_editors.str_to_lowercase.view import View
+    View()
+
+#САМ РЕДАКТОР
+def str_to_lowercase_edit(list):
+    from files.text_editors.str_to_lowercase.editor import editor
+    return editor(list)
+#========================================================
+#преобразовать строки текста - каждое слово с заглавной буквы
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def str_to_titlecase_view():
+    from files.text_editors.str_to_titlecase.view import View
+    View()
+
+#САМ РЕДАКТОР
+def str_to_titlecase_edit(list):
+    from files.text_editors.str_to_titlecase.editor import editor
+    return editor(list)
+#========================================================
 
 
 #1.ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
@@ -91,9 +139,11 @@ all_editors = {
     'сортировать строки по длинне':[sort_len_view,sort_len_edit,True,],
     'перемешать строки текста':[random_lines_view,random_lines_edit,False,],
     'удалить строки текста по длинне':[delete_str_len_view,delete_str_len_edit,True,],
-    'удалить пустоты в начале строки':[split_files_view,left_strip_str_edit,True,],
+    'удалить пустоты в начале строки':[left_strip_str_view,left_strip_str_edit,False,],
     'разбить файл(ы) по количеству строк':[split_files_view,split_files_edit,True,],
+    'удалить пустоты в конце строки':[right_strip_str_view,right_strip_str_edit,False,],
+    'преобразовать строки текста - в верхний регистр':[str_to_uppercase_view,str_to_uppercase_edit,False,],
+    'преобразовать строки текста - в нижний регистр':[str_to_lowercase_view,str_to_lowercase_edit,False,],
+    'преобразовать строки текста - каждое слово с заглавной буквы':[str_to_titlecase_view,str_to_titlecase_edit,False,],
     
     }
-
-
