@@ -77,6 +77,7 @@ class About(QtWidgets.QWidget):
         rbutton_rus.setStyleSheet('background-color: #bae1ff; color : black;')
         rbutton_rus.setFont(QtGui.QFont('pollock2ctt'))
         rbutton_eng = QtWidgets.QRadioButton('English')
+        rbutton_eng.setEnabled(False)
         rbutton_eng.setStyleSheet('background-color: #bae1ff; color : black;')
         rbutton_eng.setFont(QtGui.QFont('pollock2ctt'))
         button_ok = QtWidgets.QPushButton()

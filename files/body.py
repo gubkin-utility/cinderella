@@ -137,7 +137,6 @@ class Body(QtWidgets.QWidget):
         #ONE PAGE
         two_tables = Body_Table()
         vkladki.addTab(two_tables,'TYPE FILE: txt')
-        vkladki.setToolTip('Редактирование файлов только в формате txt')
         vkladki.setFont(QtGui.QFont('pollock2ctt'))
         vkladki.setCurrentIndex(0)
         vertical_box_all.addWidget(vkladki)

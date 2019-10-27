@@ -129,6 +129,19 @@ def str_to_titlecase_edit(list):
     from files.text_editors.str_to_titlecase.editor import editor
     return editor(list)
 #========================================================
+#удалить или заменить слова,строки,символы
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def remove_str_view():
+    from files.text_editors.remove_str.view import View
+    View()
+
+#САМ РЕДАКТОР
+def remove_str_edit(list):
+    from files.text_editors.remove_str.editor import editor
+    return editor(list)
+#========================================================
+    
 
 
 #1.ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
@@ -145,5 +158,6 @@ all_editors = {
     'преобразовать строки текста - в верхний регистр':[str_to_uppercase_view,str_to_uppercase_edit,False,],
     'преобразовать строки текста - в нижний регистр':[str_to_lowercase_view,str_to_lowercase_edit,False,],
     'преобразовать строки текста - каждое слово с заглавной буквы':[str_to_titlecase_view,str_to_titlecase_edit,False,],
+    'удалить или заменить слова,строки,символы':[remove_str_view,remove_str_edit,True,],
     
     }
