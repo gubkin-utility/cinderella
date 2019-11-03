@@ -98,7 +98,9 @@ class Mechanika(QtCore.QThread):
                 #МАНИПУЛЯЦИИ С ФАЙЛОМ
                 for f in self.allfuncs:
                     #ФУНКЦИИ КОТОРЫЕНЕ НУЖНО ОБРАБАТЫВАТЬ
-                    if f.__name__ == 'split_files_edit':
+                    if f.__name__ == 'split_files_edit':   
+                        None
+                    elif f.__name__ == 'join_files_edit':   
                         None
                     else:
                         text_file = f(text_file)                    
@@ -139,6 +141,11 @@ class Mechanika(QtCore.QThread):
                 for f in self.allfuncs:
                     #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА
                     if f.__name__ == 'split_files_edit':
+                        text_file = f(text_file,i)
+                        #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НЕ НАДО
+                        dont_save = True
+                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА
+                    elif f.__name__ == 'join_files_edit':
                         text_file = f(text_file,i)
                         #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НЕ НАДО
                         dont_save = True

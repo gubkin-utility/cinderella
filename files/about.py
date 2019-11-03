@@ -165,7 +165,7 @@ class About(QtWidgets.QWidget):
         <p><u>description:</u> Micro text editor</p>
         <p><u>license:</u> Apache 2.0 </p>
         <p><u>author:</u> <a href="https://www.facebook.com/leonid.gubkin">https://www.facebook.com/leonid.gubkin</a></p>
-        <p><u>site:</u> <a href="http://github.com/">github.com</a></p>
+        <p><u>site:</u> <a href="https://github.com/gubkin-utility/cinderella/wiki">https://github.com/gubkin-utility/cinderella/wiki</a></p>
         <p><u>youtube:</u> <a href="http://youtube.com/">youtube.com</a></p>       
         '''
         abouts = QtWidgets.QTextEdit(about_text)

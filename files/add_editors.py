@@ -141,6 +141,18 @@ def remove_str_edit(list):
     from files.text_editors.remove_str.editor import editor
     return editor(list)
 #========================================================
+#удалить или заменить слова,строки,символы
+#========================================================    
+#ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
+def join_files_view():
+    from files.text_editors.join_files.view import View
+    View()
+
+#САМ РЕДАКТОР
+def join_files_edit(list,i):
+    from files.text_editors.join_files.editor import editor
+    return editor(list,i)
+#========================================================
     
 
 
@@ -159,5 +171,6 @@ all_editors = {
     'преобразовать строки текста - в нижний регистр':[str_to_lowercase_view,str_to_lowercase_edit,False,],
     'преобразовать строки текста - каждое слово с заглавной буквы':[str_to_titlecase_view,str_to_titlecase_edit,False,],
     'удалить или заменить слова,строки,символы':[remove_str_view,remove_str_edit,True,],
+    'объединенить, склеить файлы в один файл':[join_files_view,join_files_edit,False,],
     
     }

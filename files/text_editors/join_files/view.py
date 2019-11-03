@@ -7,19 +7,19 @@ Created on  05.09.2019
 
 Cinderella - Text Editor
 
-МОДУЛЬ С НАСТРОЙКАМИ
+МОДУЛЬ БЕЗ НАСТРОЕК
 """
 
 from PyQt5 import QtWidgets, QtGui, QtCore
 import os
-from ..techfunction import title_project,icon_project, tocenter, upload_options,save_options
+from ..techfunction import title_project,icon_project, tocenter
 
 
 class View(QtWidgets.QWidget):
     def __init__(self,parent=None):
         QtWidgets.QFrame.__init__(self,parent)
-        self.name = 'Разбиение файла(ов) по строкам'
-        self.descr = 'Модуль позволяет разделить файл(ы) по количеству строк'
+        self.name = 'Объединение, склеивание файлов в один файл'
+        self.descr = 'Модуль позволяет объединить, склеить файлы в один файл'
         self.resize(300,300)
         #====================
         self.setWindowIcon(QtGui.QIcon(icon_project))
@@ -32,7 +32,7 @@ class View(QtWidgets.QWidget):
                            color: black; 
                            border: black solid 1px}
                            QWidget{ 
-                           background-color: #d0c9a6;
+                           background-color: #1def6f;
                            color : black;}
                            QLineEdit{
                            background-color: yellow;
@@ -73,52 +73,12 @@ class View(QtWidgets.QWidget):
         vertical_box_all.addWidget(self.group_box_options)
         gorizont_box_options = QtWidgets.QHBoxLayout()
         self.group_box_options.setLayout(gorizont_box_options)
+        self.text_options = QtWidgets.QTextEdit()
+        self.text_options.setReadOnly(True)
+        self.text_options.setLineWrapMode(1)
+        self.text_options.setText('Модуль не имеет настроек')
+        gorizont_box_options.addWidget(self.text_options)
         
-        self.skolko = QtWidgets.QLineEdit()
-        self.skolko.setValidator(QtGui.QIntValidator(1,100000,parent=self))
-        self.skolko.setToolTip('введите необходимую длину символов от 1 до 100000')
-        self.skolko.setAlignment(QtCore.Qt.AlignLeft)
-        self.skolko.setCursorPosition(0)
-        self.skolko.setFont(QtGui.QFont('Xpressive'))
-        
-        self.button_ok = QtWidgets.QPushButton()
-        self.button_ok.setToolTip('сохранить настройки')
-        self.button_ok.setIcon(QtGui.QIcon(os.path.join('.','files','pic','ok.png')))
-        self.skolko.textChanged.connect(lambda:self.skolko.setStyleSheet('background-color: yellow;'))
-        
-        
-        
-        #ПРОБУЕМ ОТКРЫТЬ ФАЙЛ НАСТРОЕК
-        all_file_options = upload_options()
-        #СМОТРИМ СУЩЕСТВУЕТ ЛИ ФАЙЛ
-        if len(all_file_options) > 0:
-            main_options = all_file_options['split_files']
-            self.skolko.setText(main_options)
-        #ЕСЛИ НЕ СУЩЕСТВУЕТ
-        else:
-            self.skolko.setText('1')
-            QtWidgets.QMessageBox.critical(self,'Файл настроек не найден или поврежден','Внимание файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
-            
-        #СОХРАНЯЕМ НАСТРОЙКИ
-        def button_save_options():
-            try:
-                if self.skolko.text()[0] == '0':
-                    self.skolko.setStyleSheet('background-color: red')
-                    QtWidgets.QMessageBox.information(self,'Ноль','Укажите минимум один!', defaultButton = QtWidgets.QMessageBox.Ok)
-                    
-                    
-                else:
-                    all_file_options['split_files'] = self.skolko.text()
-                    save_options(all_file_options)
-                    self.button_ok.setStyleSheet('background-color: green;')
-            except:
-                QtWidgets.QMessageBox.information(self,'Настройки не сохранены!','Возможно файл настроек settings.json не найден или поврежден. Дальнейшая работа программы не возможна!', defaultButton = QtWidgets.QMessageBox.Ok)
-
-        
-        self.button_ok.clicked.connect(button_save_options)
-        gorizont_box_options.addWidget(self.skolko,alignment = QtCore.Qt.AlignCenter)
-        gorizont_box_options.addWidget(self.button_ok,alignment = QtCore.Qt.AlignCenter)
-
         button_close = QtWidgets.QPushButton('Close')
         button_close.setFont(QtGui.QFont("You're Gone"))
         button_close.setStyleSheet('background-color: #fcaecd')
@@ -128,4 +88,3 @@ class View(QtWidgets.QWidget):
         vertical_box_all.addWidget(button_close,alignment = QtCore.Qt.AlignHCenter)
         self.setLayout(vertical_box_all)
         self.show()
-        

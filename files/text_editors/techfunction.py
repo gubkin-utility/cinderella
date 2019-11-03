@@ -27,6 +27,12 @@ def savetofilelist(file,text):
         f.writelines(text)
         
 
+#ДОБАВЛЕНИЕ В ФАЙЛ LIST
+def addtofilelist(file,text):
+    with open(file,'a', encoding='utf-8') as f:
+        f.writelines(text)
+        
+        
 #КОДИРОВКА ФАЙЛА
 def detect_encode(file):
     from chardet.universaldetector import UniversalDetector
