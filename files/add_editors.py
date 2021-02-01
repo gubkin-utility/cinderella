@@ -5,16 +5,16 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 #========================================================
 #Перемешивание строк текста
 #========================================================
 #ОКНО РЕДАКТОРА
-def random_lines_view():
+def random_lines_view(okno):
     from files.text_editors.random_lines.view import View
-    View()
+    View(okno)
 
 #РЕДАКТОР
 def random_lines_edit(list):
@@ -24,9 +24,9 @@ def random_lines_edit(list):
 #Сортировка текста по длинне
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def sort_len_view():
+def sort_len_view(okno):
     from files.text_editors.sort_len.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def sort_len_edit(list):
@@ -36,9 +36,9 @@ def sort_len_edit(list):
 #удалить пустые строки
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def delete_null_str_view():
+def delete_null_str_view(okno):
     from files.text_editors.delete_null_str.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def delete_null_str_edit(list):
@@ -48,9 +48,9 @@ def delete_null_str_edit(list):
 #удалить строки текста по длинне
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def delete_str_len_view():
+def delete_str_len_view(okno):
     from files.text_editors.delete_str_len.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def delete_str_len_edit(list):
@@ -60,9 +60,9 @@ def delete_str_len_edit(list):
 #удаленить пустоты в начале строки
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def left_strip_str_view():
+def left_strip_str_view(okno):
     from files.text_editors.left_strip_str.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def left_strip_str_edit(list):
@@ -72,21 +72,21 @@ def left_strip_str_edit(list):
 #разбить файл(ы) по количеству строк
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def split_files_view():
+def split_files_view(okno):
     from files.text_editors.split_files.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
-def split_files_edit(list,i):
+def split_files_edit(list,i,kodirovka):
     from files.text_editors.split_files.editor import editor
-    editor(list,i)
+    editor(list,i,kodirovka)
 #========================================================
 #удаленить пустоты в конце строки
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def right_strip_str_view():
+def right_strip_str_view(okno):
     from files.text_editors.right_strip_str.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def right_strip_str_edit(list):
@@ -96,9 +96,9 @@ def right_strip_str_edit(list):
 #преобразовать строки текста - в верхний регистр
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def str_to_uppercase_view():
+def str_to_uppercase_view(okno):
     from files.text_editors.str_to_uppercase.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def str_to_uppercase_edit(list):
@@ -108,9 +108,9 @@ def str_to_uppercase_edit(list):
 #преобразовать строки текста - в нижний регистр
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def str_to_lowercase_view():
+def str_to_lowercase_view(okno):
     from files.text_editors.str_to_lowercase.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def str_to_lowercase_edit(list):
@@ -120,9 +120,9 @@ def str_to_lowercase_edit(list):
 #преобразовать строки текста - каждое слово с заглавной буквы
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def str_to_titlecase_view():
+def str_to_titlecase_view(okno):
     from files.text_editors.str_to_titlecase.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def str_to_titlecase_edit(list):
@@ -132,33 +132,33 @@ def str_to_titlecase_edit(list):
 #удалить или заменить слова,строки,символы
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def remove_str_view():
+def remove_str_view(okno):
     from files.text_editors.remove_str.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def remove_str_edit(list):
     from files.text_editors.remove_str.editor import editor
     return editor(list)
 #========================================================
-#удалить или заменить слова,строки,символы
+#объединить склеить файлы в один файл
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def join_files_view():
+def join_files_view(okno):
     from files.text_editors.join_files.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
-def join_files_edit(list,i):
+def join_files_edit(list,i,kodirovka):
     from files.text_editors.join_files.editor import editor
-    return editor(list,i)
+    return editor(list,i,kodirovka)
 #========================================================
 #удалить одинаковые предложения
 #========================================================    
 #ОКНО НАСТРОЙКИ РЕДАКТОРА ТЕКСТА
-def delete_duplicate_str_view():
+def delete_duplicate_str_view(okno):
     from files.text_editors.delete_duplicate_str.view import View
-    View()
+    View(okno)
 
 #САМ РЕДАКТОР
 def delete_duplicate_str_edit(list):

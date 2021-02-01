@@ -5,7 +5,7 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 
@@ -14,7 +14,7 @@ import os
     
 
 #ФУНКЦИЯ РЕДАКТОРА
-def editor(list,i):
+def editor(list,i,kodirovka):
     path = os.path.dirname(i)
     ok_path = os.path.join(path,'OUTPUT.txt')
-    addtofilelist(ok_path,list)
+    addtofilelist(ok_path,list,kodirovka)

@@ -5,7 +5,7 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 

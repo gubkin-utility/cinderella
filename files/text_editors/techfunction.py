@@ -5,12 +5,12 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 
 
-from PyQt5 import QtWidgets
+from PySide2 import QtWidgets
 import os
 import json
 import glob
@@ -18,20 +18,168 @@ from psutil import virtual_memory
 
 
 title_project = 'Cinderella'
-icon_project = os.path.join('.','files','pic','icon.png')
+
+
+#СТИЛИ ДЛЯ МОДУЛЕЙ БЕЗ НАСТРОЕК
+css_style_without = '''
+                        QWidget{ 
+                        background-color: #24313c;
+                        color : #8e949a;
+                        }  
+                        QToolTip { 
+                        background-color: yellow; 
+                        color: black; 
+                        border: black solid 1px
+                        }
+                        QLineEdit{
+                        background-color: #d7fde6;
+                        color : black;
+                        font-family: Cousine;
+                        font-size: 12px;
+                        }
+                        QTextEdit{
+                        background-color: #d7fde6;
+                        color : black;
+                        font-family: Cousine;
+                        font-size: 12px;
+                        margin-top: 15px;
+                        }
+                        QGroupBox{
+                        color: #edd220;
+                        font-family: Xpressive;
+                        font-size: 12px;
+                        }
+                        QPushButton#button_close:enabled {
+                        background-color: #fed3f6;
+                        border: 1px inset #000000;
+                        border-radius: 5px;
+                        color: #101b15;
+                        padding: 5px;
+                        width: 80px;
+                        }
+                        QPushButton#button_close:hover {
+                        background-color: #fea9f6;
+                        border: 1px inset #000000;
+                        border-radius: 5px;
+                        color: #101b15;
+                        padding: 5px;
+                        width: 80px;
+                        }   
+                        QPushButton#button_close:pressed{
+                        background-color: #fea9bb;
+                        border: 1px inset #000000;
+                        border-radius: 5px;
+                        color: #101b15;
+                        padding: 5px;
+                        width: 80px;
+                        }
+                        QPushButton#button_close:disabled {
+                        background-color: #dadfe4;
+                        border: 1px inset #000000;
+                        border-radius: 5px;
+                        color: #101b15;
+                        padding: 5px;
+                        width: 80px;
+                        }
+                            
+                        '''
+
+#СТИЛИ ДЛЯ МОДУЛЕЙ С НАСТРОЙКАМИ
+css_style_with = '''
+                    QWidget{ 
+                    background-color: #24313c;
+                    color : #8e949a;
+                    }  
+                    QToolTip { 
+                    background-color: yellow; 
+                    color: black; 
+                    border: black solid 1px
+                    }
+                    QLineEdit{
+                    background-color: #e5e5e5;
+                    color : black;
+                    font-family: Cousine;
+                    font-size: 12px;
+                    margin-top: 15px;
+                    }
+                    QTextEdit{
+                    background-color: #e5e5e5;
+                    color : black;
+                    font-family: Cousine;
+                    font-size: 12px;
+                    margin-top: 15px;
+                    }
+                    QGroupBox{
+                    color: #edd220;
+                    font-family: Xpressive;
+                    font-size: 12px;
+                    }
+                    QPushButton#button_close:enabled {
+                    background-color: #fed3f6;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 5px;
+                    width: 80px;
+                    }
+                    QPushButton#button_close:hover {
+                    background-color: #fea9f6;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 5px;
+                    width: 80px;
+                    }   
+                    QPushButton#button_close:pressed{
+                    background-color: #fea9bb;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 5px;
+                    width: 80px;
+                    }
+                    QPushButton#button_ok:enabled {
+                    background-color: #e9e9e9;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 1px;
+                    width: 25px;
+                    height: 25px;
+                    }
+                    QPushButton#button_ok:hover {
+                    background-color: #c7e9e9;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 1px;
+                    width: 25px;
+                    height: 25px;
+                    }   
+                    QPushButton#button_ok:pressed{
+                    background-color: #90e9ac;
+                    border: 1px inset #000000;
+                    border-radius: 5px;
+                    color: #101b15;
+                    padding: 1px;
+                    width: 25px;
+                    height: 25px;
+                    }
+
+                    '''
 
 
 #СОХРАНЕНИЕ В ФАЙЛ LIST
-def savetofilelist(file,text):
-    with open(file,'w', encoding='utf-8') as f:
+def savetofilelist(file,text,kodirovka='utf-8'):
+    with open(file,'w', encoding=kodirovka) as f:
         f.writelines(text)
         
 
 #ДОБАВЛЕНИЕ В ФАЙЛ LIST
-def addtofilelist(file,text):
-    with open(file,'a', encoding='utf-8') as f:
+def addtofilelist(file,text,kodirovka='utf-8'):
+    with open(file,'a', encoding=kodirovka) as f:
         f.writelines(text)
-        
+
         
 #КОДИРОВКА ФАЙЛА
 def detect_encode(file):
@@ -77,10 +225,9 @@ def save_options(data):
 def tocenter(nowelement):
     nowelement.move(nowelement.width() * -2,0)
     desktop = QtWidgets.QApplication.desktop()
-    x = (desktop.width() - nowelement.frameSize().width()) // 2
-    y = (desktop.height() - nowelement.frameSize().height()) // 2
+    x = (desktop.width() - nowelement.size().width()) // 2
+    y = (desktop.height() - nowelement.size().height()) // 2
     nowelement.move(x,y)
-
 
 
 

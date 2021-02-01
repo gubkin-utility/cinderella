@@ -5,47 +5,33 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 МОДУЛЬ С НАСТРОЙКАМИ
 """
 
-from PyQt5 import QtWidgets, QtGui, QtCore
-import os
-from ..techfunction import title_project,icon_project, tocenter, upload_options,save_options
+from PySide2 import QtWidgets, QtGui, QtCore
+from ..techfunction import title_project, tocenter, upload_options,save_options,css_style_with
+from files.pics.close import Close
+from files.pics.ok import Ok
+from files.pics.icon import Icon
 
 
-class View(QtWidgets.QWidget):
+
+class View(QtWidgets.QFrame):
     def __init__(self,parent=None):
         QtWidgets.QFrame.__init__(self,parent)
         self.name = 'Разбиение файла(ов) по строкам'
         self.descr = 'Модуль позволяет разделить файл(ы) по количеству строк'
         self.resize(300,300)
         #====================
-        self.setWindowIcon(QtGui.QIcon(icon_project))
+        img_icon_project = QtGui.QImage()
+        img_icon_project.loadFromData(Icon)
+        self.setWindowIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(img_icon_project)))
         self.setWindowTitle(self.name + ' | Настройки | ' + title_project)
         self.setWindowFlags(QtCore.Qt.Window|QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.MSWindowsFixedSizeDialogHint)
         self.setWindowModality(QtCore.Qt.WindowModal)
-        self.setStyleSheet("""
-                           QToolTip { 
-                           background-color: yellow; 
-                           color: black; 
-                           border: black solid 1px}
-                           QWidget{ 
-                           background-color: #d0c9a6;
-                           color : black;}
-                           QLineEdit{
-                           background-color: yellow;
-                           color : black;
-                           font-family: Cousine;}
-                           QTextEdit{
-                           background-color: yellow;
-                           color : black;
-                           font-family: Cousine;}
-                           QGroupBox{
-                           color: navy;
-                           font-family: Xpressive;}
-                            """)
+        self.setStyleSheet(css_style_with)
         tocenter(self)
         
         vertical_box_all = QtWidgets.QVBoxLayout()
@@ -65,7 +51,7 @@ class View(QtWidgets.QWidget):
         self.group_box_descr.setLayout(gorizont_box_descr)
         self.text_descr = QtWidgets.QTextEdit()
         self.text_descr.setReadOnly(True)
-        self.text_descr.setLineWrapMode(1)
+        self.text_descr.setLineWrapMode(QtWidgets.QTextEdit.LineWrapMode.WidgetWidth)
         self.text_descr.setText(self.descr)
         gorizont_box_descr.addWidget(self.text_descr)
         
@@ -83,8 +69,11 @@ class View(QtWidgets.QWidget):
         
         self.button_ok = QtWidgets.QPushButton()
         self.button_ok.setToolTip('сохранить настройки')
-        self.button_ok.setIcon(QtGui.QIcon(os.path.join('.','files','pic','ok.png')))
-        self.skolko.textChanged.connect(lambda:self.skolko.setStyleSheet('background-color: yellow;'))
+        self.button_ok.setObjectName('button_ok')
+        img_button_ok = QtGui.QImage()
+        img_button_ok.loadFromData(Ok)
+        self.button_ok.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(img_button_ok)))
+        
         
         
         
@@ -120,9 +109,11 @@ class View(QtWidgets.QWidget):
         gorizont_box_options.addWidget(self.button_ok,alignment = QtCore.Qt.AlignCenter)
 
         button_close = QtWidgets.QPushButton('Close')
-        button_close.setFont(QtGui.QFont("You're Gone"))
-        button_close.setStyleSheet('background-color: #fcaecd')
-        button_close.setIcon(QtGui.QIcon(os.path.join('.','files','pic','close.png')))
+        button_close.setFont(QtGui.QFont("You're Gone",15))
+        button_close.setObjectName('button_close')
+        img_button_close = QtGui.QImage()
+        img_button_close.loadFromData(Close)
+        button_close.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(img_button_close)))
         button_close.clicked.connect(lambda:self.close())
         
         vertical_box_all.addWidget(button_close,alignment = QtCore.Qt.AlignHCenter)

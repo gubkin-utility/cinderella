@@ -5,36 +5,80 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 
-from PyQt5 import QtWidgets, QtGui, QtCore
-from files.text_editors.techfunction import title_project,icon_project,tocenter
-import os
+from PySide2 import QtWidgets, QtGui, QtCore
+from files.text_editors.techfunction import title_project,tocenter
+from files.pics.close import Close
+from files.pics.icon import Icon
+
 #=============================================================
 #TEST EDITOR
 #=============================================================
 
 
 
-class TestEditor(QtWidgets.QWidget):
+class TestEditor(QtWidgets.QFrame):
     def __init__(self, parent=None):
         QtWidgets.QFrame.__init__(self,parent)
-        self.setWindowIcon(QtGui.QIcon(icon_project))
+        img_icon = QtGui.QImage()
+        img_icon.loadFromData(Icon)
+        self.setWindowIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(img_icon)))
         self.setWindowTitle('Test | ' + title_project)
+        self.setWindowFlags(QtCore.Qt.Window|QtCore.Qt.WindowStaysOnTopHint|QtCore.Qt.MSWindowsFixedSizeDialogHint)
+        self.setWindowModality(QtCore.Qt.WindowModal)
         self.setStyleSheet("""
+                           QWidget{ 
+                           background-color: #24313c;
+                           color : #8e949a;
+                           }
                            QToolTip { 
                            background-color: yellow; 
                            color: black; 
-                           border: black solid 1px}
-                           QWidget{ 
-                           background-color: #bae1ff;
-                           color : black;}
-                           QGroupBox::title {
+                           border: black solid 1px
+                           }
+                           QGroupBox{
                            color: red;
-                           font-family: Xpressive;}
+                           subcontrol-position: top left;
+                           font-size: 21px;
+                           font-family: Xpressive;
+                           }
+                           QPushButton#button_close:enabled {
+                           background-color: #fed3f6;
+                           border: 1px inset #000000;
+                           border-radius: 5px;
+                           color: #101b15;
+                           padding: 5px;
+                           width: 80px;
+                           }
+                           QPushButton#button_close:hover {
+                           background-color: #fea9f6;
+                           border: 1px inset #000000;
+                           border-radius: 5px;
+                           color: #101b15;
+                           padding: 5px;
+                           width: 80px;
+                           }   
+                           QPushButton#button_close:pressed{
+                           background-color: #fea9bb;
+                           border: 1px inset #000000;
+                           border-radius: 5px;
+                           color: #101b15;
+                           padding: 5px;
+                           width: 80px;
+                           }
+                           QPushButton#button_close:disabled {
+                           background-color: #dadfe4;
+                           border: 1px inset #000000;
+                           border-radius: 5px;
+                           color: #101b15;
+                           padding: 5px;
+                           width: 80px;
+                           }
                            """)
+        self.setMinimumSize(800,600)
         self.skolko_strok = 0
         self.skolko_strok_edit = 0
         self.kodirovka = '-'
@@ -47,12 +91,12 @@ class TestEditor(QtWidgets.QWidget):
         gorizont_box_00 = QtWidgets.QHBoxLayout()
         group_box.setLayout(gorizont_box_00)
         label_name_file = QtWidgets.QLabel('Path to file: ')
-        label_name_file.setFont(QtGui.QFont('Xpressive'))
+        label_name_file.setFont(QtGui.QFont('Xpressive',13))
         self.el_name_file = QtWidgets.QLineEdit()
         self.el_name_file.setReadOnly(True)
         self.el_name_file.setAlignment(QtCore.Qt.AlignLeft)
         self.el_name_file.setCursorPosition(0)
-        self.el_name_file.setFont(QtGui.QFont('Xpressive'))
+        self.el_name_file.setFont(QtGui.QFont('Xpressive',12))
         gorizont_box_00.addWidget(label_name_file)
         gorizont_box_00.addWidget(self.el_name_file)
         
@@ -70,51 +114,53 @@ class TestEditor(QtWidgets.QWidget):
         group_box_edit.setLayout(vertical_box_edit)
         #ДО ТЕКСТ
         self.el_text_file = QtWidgets.QTextEdit()
-        self.el_text_file.setLineWrapMode(0)
+        self.el_text_file.setLineWrapMode(QtWidgets.QTextEdit.LineWrapMode.NoWrap)
         self.el_text_file.setReadOnly(True)
-        self.el_text_file.setWordWrapMode(0)
+        self.el_text_file.setWordWrapMode(QtGui.QTextOption.WrapMode.NoWrap)
         self.mod_doc = QtGui.QTextDocument()
-        self.mod_doc.setDefaultFont(QtGui.QFont('Cousine'))
+        self.mod_doc.setDefaultFont(QtGui.QFont('Cousine',12))
         self.el_text_file.setDocument(self.mod_doc)
         self.el_text_file.moveCursor(QtGui.QTextCursor.Start)
+        vertical_box_orig.addSpacing(15)
         vertical_box_orig.addWidget(self.el_text_file)
-        ind_voprosov_orig = QtWidgets.QLabel('Количество строк: <b style="color:navy;">{}</b>'.format(0))
+        ind_voprosov_orig = QtWidgets.QLabel('Количество строк: <b style="color:#edd220;">{}</b>'.format(0))
         gorizont_box_07 = QtWidgets.QHBoxLayout()
-        ind_voprosov_orig.setFont(QtGui.QFont('pollock2ctt'))
+        ind_voprosov_orig.setFont(QtGui.QFont('pollock2ctt',12))
         gorizont_box_07.addWidget(ind_voprosov_orig,alignment = QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
         gorizont_box_07.addStretch(500)
         
-        ind_coding_orig = QtWidgets.QLabel('Кодировка файла: <b style="color:navy;">{}</b>'.format(self.kodirovka))
-        ind_coding_orig.setFont(QtGui.QFont('pollock2ctt'))
+        ind_coding_orig = QtWidgets.QLabel('Кодировка файла: <b style="color:#edd220;">{}</b>'.format(self.kodirovka))
+        ind_coding_orig.setFont(QtGui.QFont('pollock2ctt',12))
         gorizont_box_07.addWidget(ind_coding_orig,alignment = QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
         vertical_box_orig.addLayout(gorizont_box_07)
         
         
         #ИНДИКАТОР КОДИРОВКИ 
         def changed_cod_orig():
-            ind_coding_orig.setText('Кодировка файла: <b style="color:navy;">{}</b>'.format(self.kodirovka))
+            ind_coding_orig.setText('Кодировка файла: <b style="color:#edd220;">{}</b>'.format(self.kodirovka))
             
             
         #ПОСЛЕ ТЕКСТ
         self.el_text_file_edit = QtWidgets.QTextEdit()
-        self.el_text_file_edit.setLineWrapMode(0)
+        self.el_text_file_edit.setLineWrapMode(QtWidgets.QTextEdit.LineWrapMode.NoWrap)
         self.el_text_file_edit.setReadOnly(True)
-        self.el_text_file_edit.setWordWrapMode(0)
+        self.el_text_file_edit.setWordWrapMode(QtGui.QTextOption.WrapMode.NoWrap)
         self.mod_doc_edit = QtGui.QTextDocument()
-        self.mod_doc_edit.setDefaultFont(QtGui.QFont('Cousine'))
+        self.mod_doc_edit.setDefaultFont(QtGui.QFont('Cousine',12))
         self.el_text_file_edit.setDocument(self.mod_doc_edit)
+        vertical_box_edit.addSpacing(15)
         vertical_box_edit.addWidget(self.el_text_file_edit)
-        ind_voprosov_edit = QtWidgets.QLabel('Количество строк: <b style="color:navy;">{}</b>'.format(0))
-        ind_voprosov_edit.setFont(QtGui.QFont('pollock2ctt'))
+        ind_voprosov_edit = QtWidgets.QLabel('Количество строк: <b style="color:#edd220;">{}</b>'.format(0))
+        ind_voprosov_edit.setFont(QtGui.QFont('pollock2ctt',12))
         vertical_box_edit.addWidget(ind_voprosov_edit,alignment = QtCore.Qt.AlignRight|QtCore.Qt.AlignBottom)
 
         
         #ИНДИКАТОР СТРОК 
         def changed_str_orig():
-            ind_voprosov_orig.setText('Количество строк: <b style="color:navy;">{}</b>'.format(self.skolko_strok))
+            ind_voprosov_orig.setText('Количество строк: <b style="color:#edd220;">{}</b>'.format(self.skolko_strok))
             
         def changed_str_edit():
-            ind_voprosov_edit.setText('Количество строк: <b style="color:navy;">{}</b>'.format(self.skolko_strok_edit))
+            ind_voprosov_edit.setText('Количество строк: <b style="color:#edd220;">{}</b>'.format(self.skolko_strok_edit))
       
         self.mod_doc.contentsChanged.connect(changed_str_orig)
         self.mod_doc_edit.contentsChanged.connect(changed_str_edit)
@@ -125,13 +171,16 @@ class TestEditor(QtWidgets.QWidget):
         #КНОПКИ
         gorizont_box_0 = QtWidgets.QHBoxLayout()
         button_close = QtWidgets.QPushButton('Close')
-        button_close.setFont(QtGui.QFont("You're Gone"))
-        button_close.setIcon(QtGui.QIcon(os.path.join('.','files','pic','close.png')))
-        button_close.setStyleSheet('background-color: #fcaecd')
+        button_close.setObjectName('button_close')
+        button_close.setFont(QtGui.QFont("You're Gone",15))
+        
+        img_button_close = QtGui.QImage()
+        img_button_close.loadFromData(Close)
+        button_close.setIcon(QtGui.QIcon(QtGui.QPixmap.fromImage(img_button_close)))
         button_close.clicked.connect(lambda:self.close())
         #ИНДИКАТОР ДЛЯ ПРЕДУПРЕЖДЕНИЙ
         self.ind = QtWidgets.QLabel() 
-        self.ind.setFont(QtGui.QFont('pollock2ctt'))
+        self.ind.setFont(QtGui.QFont('pollock2ctt',12))
         gorizont_box_0.addWidget(button_close,alignment = QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
         gorizont_box_0.addWidget(self.ind,alignment = QtCore.Qt.AlignLeft|QtCore.Qt.AlignBottom)
         vertical_box_0.addLayout(gorizont_box_0)
@@ -184,10 +233,3 @@ class TestEditor(QtWidgets.QWidget):
     #ДОБАВЛЯЕМ ИМЯ ФАЙЛА
     def add_text_edit_name(self,str):
         self.el_name_file.setText(str)
-      
-#    #ДОБАВИТЬ КОДИРОВКУ НА ЭКРАН
-#    def add_kodirovka(self,str):
-#        self.kodirovka = str
-
-
-

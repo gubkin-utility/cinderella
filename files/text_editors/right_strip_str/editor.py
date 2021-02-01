@@ -5,7 +5,7 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 
@@ -13,7 +13,7 @@ Cinderella - Text Editor
 #ФУНКЦИЯ РЕДАКТОРА
 def editor(list_d):
     def tech(str1):
-        str1 = str1.rstrip()
+        str1 = str1.rstrip('\r\n')
         str1 = str1 + '\n'
         return str1
     

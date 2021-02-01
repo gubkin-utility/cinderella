@@ -5,11 +5,11 @@ Created on  05.09.2019
 
 @author: Gubkin Leonid
 
-Cinderella - Text Editor
+Cinderella - Mass Text Editor
 
 """
 
-from PyQt5 import QtWidgets, QtCore
+from PySide2 import QtWidgets, QtCore
 import os, shutil
 import glob
 from files.motor.testeditor import TestEditor
@@ -18,8 +18,8 @@ from files.text_editors.techfunction import info_size_file
 class Mechanika(QtCore.QThread):
     #ДЛЯ ОСТАНОВКИ ПЕРИФЕРИЙНЫХ МОДУЛЕЙ
     stop_now = True
-    value_statusbar = QtCore.pyqtSignal(int)
-    mysignal = QtCore.pyqtSignal()
+    value_statusbar = QtCore.Signal(int)
+    mysignal = QtCore.Signal()
     def __init__(self,parent=None):
         QtCore.QThread.__init__(self,parent)
         #АТРИБУТ СТОП
@@ -32,10 +32,12 @@ class Mechanika(QtCore.QThread):
         self.vsego_files = len(self.allfiles)
         #ОСТАЛОСЬ ФАЙЛОВ
         self.ostalos_files = self.vsego_files
+        #КОДИРОВКА
+        self.cur_coding = 'utf_8'
         #BACKUP
         self.backup = True
         #ДЛЯ ПРОСМ. ТЕСТА
-        self.mytestmodule = TestEditor()
+        self.mytestmodule = TestEditor(parent)
         #LOG INFO
         self.log =[]
         
@@ -65,8 +67,8 @@ class Mechanika(QtCore.QThread):
     
     
     #СОХРАНИТЬ ФАЙЛ LIST
-    def savetofilelist(self,path,textcontent):
-        with open(path,'w', encoding='utf-8') as f:
+    def savetofilelist(self,path,textcontent,kodirovka='utf-8'):
+        with open(path,'w', encoding=kodirovka) as f:
             f.writelines(textcontent)
             
     
@@ -79,7 +81,7 @@ class Mechanika(QtCore.QThread):
             else:
                 try:
                     #ОТКРЫВАЕМ ПЕРВЫЙ ФАЙЛ [LIST]
-                    text_file = self.opentofilelist(self.allfiles[0])
+                    text_file = self.opentofilelist(self.allfiles[0],self.cur_coding)
                     #УСТАНАВЛИВАЕМ КОДИРОВКУ
                     self.mytestmodule.kodirovka = 'UTF-8'
                     
@@ -91,13 +93,13 @@ class Mechanika(QtCore.QThread):
                     #УСТАНАВЛИВАЕМ КОДИРОВКУ
                     self.mytestmodule.kodirovka = code_file
                     #ЕЩЕ РАЗ ОТКРЫВАЕМ ПЕРВЫЙ ФАЙЛ [LIST]
-                    text_file = self.opentofilelist(self.allfiles[0],code_file)
+                    text_file = self.opentofilelist(self.allfiles[0],code_file,self.cur_coding)
 
                 #ОРИГИНАЛЬНЫЙ ФАЙЛ
                 orig_file = text_file.copy()
                 #МАНИПУЛЯЦИИ С ФАЙЛОМ
                 for f in self.allfuncs:
-                    #ФУНКЦИИ КОТОРЫЕНЕ НУЖНО ОБРАБАТЫВАТЬ
+                    #ФУНКЦИИ КОТОРЫЕ НЕ НУЖНО ОБРАБАТЫВАТЬ
                     if f.__name__ == 'split_files_edit':   
                         None
                     elif f.__name__ == 'join_files_edit':   
@@ -113,7 +115,7 @@ class Mechanika(QtCore.QThread):
                 #SHOW
                 self.mytestmodule.showMaximized()
         except:
-            QtWidgets.QMessageBox.critical(None,'Что то пошло не так!','Ошибка: не возможно открыть файл:\n{}\nПроверьте кодировку файла она должна быть UTF-8'.format(self.allfiles[0]) ,defaultButton = QtWidgets.QMessageBox.Ok)
+            QtWidgets.QMessageBox.critical(None,'Что то пошло не так!','Ошибка: не возможно открыть файл:\n{}\n или не правильно указана кодировка файла!'.format(self.allfiles[0]) ,defaultButton = QtWidgets.QMessageBox.Ok)
             
         
         
@@ -121,6 +123,8 @@ class Mechanika(QtCore.QThread):
     
     #ОСНОВНАЯ ФУНКЦИЯ
     def run(self):
+        #PROGRESSBAR TO NULL
+        self.ostalos_files = self.vsego_files
         self.running = True
         self.log.clear()
         for i in self.allfiles:
@@ -130,23 +134,23 @@ class Mechanika(QtCore.QThread):
                 continue
             #BACKUP
             if self.backup  == True:
-                shutil.copy(i,i + '_copy')
+                shutil.copy(i,i + '_backup')
             #ДЛЯ ОСТАНОВКИ ЦИКЛА
             if self.running == False:
                 break
             try:
                 #ОТКРЫВАЕМ ФАЙЛ LIST
-                text_file = self.opentofilelist(i)
+                text_file = self.opentofilelist(i,self.cur_coding)
                 #МАНИПУЛЯЦИИ С ФАЙЛОМ
                 for f in self.allfuncs:
-                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА
+                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА И КОДИРОВКУ
                     if f.__name__ == 'split_files_edit':
-                        text_file = f(text_file,i)
+                        text_file = f(text_file,i,self.cur_coding)
                         #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НЕ НАДО
                         dont_save = True
-                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА
+                    #ЕСЛИ НУЖНО В ФУНКЦИЮ ПЕРЕДАТЬ ПУТЬ ФАЙЛА И КОДИРОВКУ
                     elif f.__name__ == 'join_files_edit':
-                        text_file = f(text_file,i)
+                        text_file = f(text_file,i,self.cur_coding)
                         #СТАТУС ЧТО СОХРАНЯТЬ В ЦИКЛЕ НЕ НАДО
                         dont_save = True
                     else:
@@ -156,10 +160,10 @@ class Mechanika(QtCore.QThread):
                 
                 if dont_save == False:
                     #СОХРАНЯЕМ ФАЙЛ LIST
-                    self.savetofilelist(i,text_file)
+                    self.savetofilelist(i,text_file,self.cur_coding)
                 self.log.append(i + ' - <b style="color:green;">[Ok]</b>')
             except UnicodeDecodeError:
-                self.log.append(i + ' - <b style="color:red;">[file not utf 8 encoded][Error]</b>')
+                self.log.append(i + ' - <b style="color:red;">[выбрана неправильная кодировка][Error]</b>')
                 
             except TypeError as e:
                 print(e)
@@ -169,11 +173,8 @@ class Mechanika(QtCore.QThread):
             self.value_statusbar.emit(self.ostalos_files)
         #УКАЗАТЕЛЬ КОНЦА ПРОЦЕССА
         self.mysignal.emit()
+
+
+
+
         
-        
-
-
-
-
-
-
